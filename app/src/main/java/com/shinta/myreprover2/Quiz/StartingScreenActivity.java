@@ -19,7 +19,7 @@ public class StartingScreenActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private TextView textViewHighscore;
-    private int highscore;
+    private float highscore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,7 @@ public class StartingScreenActivity extends AppCompatActivity {
         buttonMulai.setEnabled(false);
         if(requestCode == REQUEST_CODE_QUIZ){
             if(resultCode == RESULT_OK){
-                int score = data.getIntExtra(QuizActivity.EXTRA_SCORE,0);
+                float score = data.getFloatExtra(QuizActivity.EXTRA_SCORE,0);
                 if (score > highscore){
                     updateHighscore(score);
                 }
@@ -65,16 +65,16 @@ public class StartingScreenActivity extends AppCompatActivity {
     }
     private void loadHighScore(){
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        highscore = prefs.getInt(KEY_HIGHSCORE, 0);
+        highscore = prefs.getFloat(KEY_HIGHSCORE, 0);
         textViewHighscore.setText("Nilai :" + highscore);
     }
 
-    private void updateHighscore(int highscoreNew){
+    private void updateHighscore(float highscoreNew){
         highscore = highscoreNew;
         textViewHighscore.setText("Nilai :" + highscore);
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(KEY_HIGHSCORE, highscore);
+        editor.putFloat(KEY_HIGHSCORE, highscore);
         editor.apply();
     }
 }

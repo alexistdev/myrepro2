@@ -26,7 +26,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_SCORE  = "extraScore";
     //3 menit timer
-    private static final long COUNTDOWN_IN_MILLIS = 30000;
+    private static final long COUNTDOWN_IN_MILLIS = 180000;
 
     private ImageView gambarPertanyaan;
     private TextView textViewQuestion;
@@ -54,14 +54,13 @@ public class QuizActivity extends AppCompatActivity {
     private int questionCountTotal;
     private Pertanyaan currentQuestion;
 
-    private int score;
+    private float score;
     private boolean answered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz2);
-        score = 10;
         //gambar pertanyaan
 
         gambarPertanyaan= findViewById(R.id.gbrPertanyaan);
@@ -217,17 +216,7 @@ public class QuizActivity extends AppCompatActivity {
             textViewCountDown.setTextColor(textColorDefaultCd);
         }
     }
-    //mengecek apakah gambar atau bukan
-//    private void checkStatus(){
-//        //statusGambar = true;
-//        int statusNr = currentQuestion.getStatusPr();
-//        if (statusNr == 1){
-//
-//        } else {
-//
-//        }
-//
-//    }
+
     //mengecek jawaban
     private void checkAnswer() {
         answered = true;
@@ -237,7 +226,7 @@ public class QuizActivity extends AppCompatActivity {
         int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
 
         if (answerNr == currentQuestion.getAnswerNr()) {
-            score += 3;
+            score += (100/2);
             textViewScore.setText("Nilai : " + score);
         }
 
