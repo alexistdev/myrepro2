@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgapps2"
+    android:padding="16dp"
+    tools:context=".API.SignupActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/daftar4"
+                android:background="@color/Informasi"
+                android:textSize="18sp"
+                android:textColor="@color/warnaPutih"
+                android:layout_marginTop="20dp"
+                />
+            <EditText
+                android:id="@+id/etnis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:autofillHints="@string/app_name"
+                android:hint="@string/daftar1"
+                android:inputType="textCapWords" />
+
+            <EditText
+                android:id="@+id/etnama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:autofillHints="@string/app_name"
+                android:hint="@string/daftar2"
+                android:inputType="textCapWords" />
+            <Button
+                android:id="@+id/btnSimpan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:shadowColor="@color/warnaToolbar"
+                android:text="@string/daftar3"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -18,15 +18,17 @@ public class StartingScreenActivity extends AppCompatActivity {
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private TextView textViewHighscore;
+    private String nis;
     private float highscore = 0;
     public float score = 0;
     public String nilaiAkhir;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_screen);
-
+        nis = getIntent().getStringExtra("nis");
         textViewHighscore = findViewById(R.id.txtNilai);
         try{
             loadHighScore();

@@ -337,7 +337,7 @@
     <string name="quiz10">Disini akan menjadi text pertanyaan\nDisini akan menjadi text pertanyaan\nDisini akan menjadi text pertanyaan</string>
     <string name="quiz11">Simpan</string>
 
-<!--    Mindmap-->
+    <!--    Mindmap-->
     <string name="mind1">PROFIL PENULIS</string>
     <string name="mind2">NAMA : SHINTA ALMAYRA SARASWATI</string>
     <string name="mind3">RIWAYAT PENDIDIKAN :</string>
@@ -345,4 +345,10 @@
     <string name="mind5">SMP NEGERI 1 PRINGSEWU (2007-2010)</string>
     <string name="mind6">MAN 1 METRO (2010-2013)</string>
     <string name="mind7">UNIVERSITAS ISLAM NEGERI RADEN INTAN LAMPUNG (2013-2017)</string>
+
+    <!--    Daftar-->
+    <string name="daftar1">Masukkan NIS</string>
+    <string name="daftar2">Masukkan Nama Lengkap</string>
+    <string name="daftar3">Mulai Test</string>
+    <string name="daftar4">INFO</string>
 </resources>

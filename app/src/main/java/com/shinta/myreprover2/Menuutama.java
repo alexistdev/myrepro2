@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.shinta.myreprover2.API.SignupActivity;
 import com.shinta.myreprover2.Quiz.QuizActivity;
 import com.shinta.myreprover2.Quiz.StartingScreenActivity;
 
@@ -46,7 +47,7 @@ public class Menuutama extends AppCompatActivity {
         evaluasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intenku = new Intent(getApplicationContext(), StartingScreenActivity.class);
+                Intent intenku = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivity(intenku);
             }
         });
