@@ -11,7 +11,7 @@ import com.shinta.myreprover2.Quiz.QuizActivity;
 import com.shinta.myreprover2.Quiz.StartingScreenActivity;
 
 public class Menuutama extends AppCompatActivity {
-    KompetensiAdapter mAdapterku;
+    //KompetensiAdapter mAdapterku;
     CardView pendahuluan,materi,tentang,evaluasi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

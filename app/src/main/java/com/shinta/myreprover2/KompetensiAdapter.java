@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,17 +28,21 @@ public class KompetensiAdapter extends ArrayAdapter<Kompetensi> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
-        if (listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.customlayout, parent, false);
+        try{
+            if (listItem == null)
+                listItem = LayoutInflater.from(mContext).inflate(R.layout.customlayout, parent, false);
 
-        Kompetensi pilihan = daftarKompetensi.get(position);
+            Kompetensi pilihan = daftarKompetensi.get(position);
 
-        ImageView image = (ImageView) listItem.findViewById(R.id.menutentang);
-        image.setImageResource(pilihan.getmImgGambar());
+            ImageView image = (ImageView) listItem.findViewById(R.id.menutentang);
+            image.setImageResource(pilihan.getmImgGambar());
 
 //        TextView name = (TextView) listItem.findViewById(R.id.tvTulisanku);
 //        name.setText(currentMovie.getnName());
-
+        }
+            catch (Exception e){
+                Toast.makeText(mContext.getApplicationContext(), "Error",Toast.LENGTH_LONG).show();
+        }
         return listItem;
     }
 }

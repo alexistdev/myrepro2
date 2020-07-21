@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.shinta.myreprover2.Materi;
+import com.shinta.myreprover2.Menuutama;
+import com.shinta.myreprover2.Mindmap;
 import com.shinta.myreprover2.R;
 
 public class Menstruasi extends AppCompatActivity {
@@ -34,10 +36,15 @@ public class Menstruasi extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.setting){
-            Toast.makeText(getApplicationContext(),"Anda klik dibagi", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.tentang_kita){
-            Toast.makeText(getApplicationContext(),"Anda klik tentang kita", Toast.LENGTH_SHORT).show();
+        if (id == R.id.beranda){
+            Intent myIntent = new Intent(getApplicationContext(), Menuutama.class);
+            startActivityForResult(myIntent, 0);
+            finish();
+        } else if (id == R.id.exit){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } else {
             Intent myIntent = new Intent(getApplicationContext(), Materi.class);
             startActivityForResult(myIntent, 0);

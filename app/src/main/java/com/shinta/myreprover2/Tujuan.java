@@ -53,14 +53,15 @@ public class Tujuan extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.setting){
-            Toast.makeText(getApplicationContext(),"Anda klik dibagi", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.tentang_kita){
-            Toast.makeText(getApplicationContext(),"Anda klik tentang kita", Toast.LENGTH_SHORT).show();
-        } else {
-            Intent myIntent = new Intent(getApplicationContext(), tentang.class);
+        if (id == R.id.beranda){
+            Intent myIntent = new Intent(getApplicationContext(), Menuutama.class);
             startActivityForResult(myIntent, 0);
             finish();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
         return true;
     }

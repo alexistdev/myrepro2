@@ -41,6 +41,7 @@ public class QuizActivity extends AppCompatActivity {
     private RadioButton rb5;
     private Button buttonConfirmNext;
     private long backPressedTime;
+    public String tampilCounter;
 
 
     private ColorStateList textColorDefaultRb;
@@ -83,12 +84,9 @@ public class QuizActivity extends AppCompatActivity {
         QuizDbHelper dbHelper = new QuizDbHelper(this);
         questionList =  dbHelper.getAllQuestions();
         questionCountTotal = questionList.size();
+        //mengacak soal
         Collections.shuffle(questionList);
-
-
-        //menampilkan pertanyaan berupa gambar
-        //checkStatusPertanyaan();
-        //gambarPertanyaan.setVisibility(View.VISIBLE);
+        //menampilkan pertanyaan selanjutnya
         showNextQuestion();
 
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
@@ -145,36 +143,16 @@ public class QuizActivity extends AppCompatActivity {
 
         if (questionCounter < questionCountTotal) {
 
-
-            //menampilkan pertanyaan berupa gambar
-//            currentQuestion = questionList.get(questionCounter);
-//            int statusPr = currentQuestion.getStatusPr();
-//            if (statusPr == 1){
-//                gambarPertanyaan.setVisibility(View.VISIBLE);
-//                textViewQuestion.setVisibility(View.GONE);
-//                //jika benar gambar
-//                //pertanyaan gambar
-//                String uri = currentQuestion.getQuestion();
-//                Resources resources = getResources();
-//                int resourceId = resources.getIdentifier( uri,
-//                        "drawable", getPackageName());
-//                gambarPertanyaan.setImageResource(resourceId);
-//            } else {
-//                gambarPertanyaan.setVisibility(View.GONE);
-//                textViewQuestion.setVisibility(View.VISIBLE);
-//                textViewQuestion.setText(currentQuestion.getQuestion());
-//            }
-
             checkStatusPertanyaan();
-            //textViewQuestion.setText(currentQuestion.getQuestion());
-            rb1.setText(currentQuestion.getOption1());
-            rb2.setText(currentQuestion.getOption2());
-            rb3.setText(currentQuestion.getOption3());
-            rb4.setText(currentQuestion.getOption4());
-            rb5.setText(currentQuestion.getOption5());
+            rb1.setText(Html.fromHtml(currentQuestion.getOption1()));
+            rb2.setText(Html.fromHtml(currentQuestion.getOption2()));
+            rb3.setText(Html.fromHtml(currentQuestion.getOption3()));
+            rb4.setText(Html.fromHtml(currentQuestion.getOption4()));
+            rb5.setText(Html.fromHtml(currentQuestion.getOption5()));
 
-            questionCounter++;
-            textViewQuestionCount.setText("Pertanyaan: " + questionCounter + "/" + questionCountTotal);
+
+            tampilCounter = String.valueOf(questionCounter++);
+            textViewQuestionCount.setText("Pertanyaan: " + tampilCounter + "/" + questionCountTotal);
             answered = false;
             buttonConfirmNext.setText("Simpan");
 
@@ -226,8 +204,13 @@ public class QuizActivity extends AppCompatActivity {
         int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
 
         if (answerNr == currentQuestion.getAnswerNr()) {
-            score += (100/2);
-            textViewScore.setText("Nilai : " + score);
+            score += 3.33;
+            if(score > 99){
+                score = 100;
+                textViewScore.setText("Nilai : " + score);
+            } else {
+                textViewScore.setText("Nilai : " + score);
+            }
         }
 
         showSolution();
