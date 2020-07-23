@@ -2,27 +2,23 @@ package com.shinta.myreprover2.Network;
 
 import com.shinta.myreprover2.config.Constants;
 import com.shinta.myreprover2.model.MessageModel;
-import com.shinta.myreprover2.model.UserModel;
-
-
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface APIService {
 
-    @FormUrlEncoded
-    @POST("API/getUser.php")
-    Call<UserModel> postDataUser(@Part("nis") RequestBody nis);
+
+    @Multipart
+    @POST("API/nilai.php")
+    Call<MessageModel> postTambahNilai(@Part("idUser") RequestBody idUser,
+                                      @Part("nilai") RequestBody nilai);
 
     @Multipart
     @POST("API/tambah.php")

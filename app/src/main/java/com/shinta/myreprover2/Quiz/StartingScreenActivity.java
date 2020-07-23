@@ -2,26 +2,16 @@ package com.shinta.myreprover2.Quiz;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.shinta.myreprover2.API.SignupActivity;
 import com.shinta.myreprover2.Menuutama;
-import com.shinta.myreprover2.Network.APIService;
 import com.shinta.myreprover2.R;
-import com.shinta.myreprover2.model.UserModel;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class StartingScreenActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_QUIZ  = 1;
@@ -36,14 +26,14 @@ public class StartingScreenActivity extends AppCompatActivity {
     public float score = 0;
     public String nilaiAkhir;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         nama ="";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_screen);
-        nis = getIntent().getStringExtra("nis");
-        nama = getIntent().getStringExtra("nama");
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( this);
+        String nama = sp.getString("namaku","");
         textViewHighscore = findViewById(R.id.txtNilai);
         namaUser = findViewById(R.id.txtNamaUser);
         if(nama != null){

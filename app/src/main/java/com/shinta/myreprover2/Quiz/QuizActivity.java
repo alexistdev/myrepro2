@@ -24,11 +24,9 @@ import com.shinta.myreprover2.API.SignupActivity;
 import com.shinta.myreprover2.Network.APIService;
 import com.shinta.myreprover2.R;
 import com.shinta.myreprover2.model.MessageModel;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -55,19 +53,14 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonConfirmNext;
     private long backPressedTime;
     public String tampilCounter;
-
-
     private ColorStateList textColorDefaultRb;
     private ColorStateList textColorDefaultCd;
-
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
-
     private List<Pertanyaan> questionList;
     private int questionCounter;
     private int questionCountTotal;
     private Pertanyaan currentQuestion;
-
     private float score;
     private boolean answered;
     private ProgressDialog progressDialog;
@@ -77,9 +70,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz2);
         //gambar pertanyaan
-
         gambarPertanyaan= findViewById(R.id.gbrPertanyaan);
-
         textViewQuestion = findViewById(R.id.txtPertanyaan);
         textViewScore = findViewById(R.id.txtNilai);
         textViewQuestionCount = findViewById(R.id.txtPertanyaanCount);
@@ -91,10 +82,8 @@ public class QuizActivity extends AppCompatActivity {
         rb4= findViewById(R.id.radioPilihan4);
         rb5= findViewById(R.id.radioPilihan5);
         buttonConfirmNext = findViewById(R.id.btnSimpan);
-
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
-
         QuizDbHelper dbHelper = new QuizDbHelper(this);
         questionList =  dbHelper.getAllQuestions();
         questionCountTotal = questionList.size();
@@ -102,7 +91,6 @@ public class QuizActivity extends AppCompatActivity {
         Collections.shuffle(questionList);
         //menampilkan pertanyaan selanjutnya
         showNextQuestion();
-
         buttonConfirmNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,20 +144,16 @@ public class QuizActivity extends AppCompatActivity {
         rbGroup.clearCheck();
 
         if (questionCounter < questionCountTotal) {
-
             checkStatusPertanyaan();
             rb1.setText(Html.fromHtml(currentQuestion.getOption1()));
             rb2.setText(Html.fromHtml(currentQuestion.getOption2()));
             rb3.setText(Html.fromHtml(currentQuestion.getOption3()));
             rb4.setText(Html.fromHtml(currentQuestion.getOption4()));
             rb5.setText(Html.fromHtml(currentQuestion.getOption5()));
-
-
             tampilCounter = String.valueOf(questionCounter++);
             textViewQuestionCount.setText("Pertanyaan: " + tampilCounter + "/" + questionCountTotal);
             answered = false;
             buttonConfirmNext.setText("Simpan");
-
             //untuk timer
             timeLeftInMillis = COUNTDOWN_IN_MILLIS;
             startCountDown();
@@ -198,10 +182,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updateCountDownText(){
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis/ 1000) % 60;
-
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         textViewCountDown.setText(timeFormatted);
-
         if (timeLeftInMillis < 10000){
             textViewCountDown.setTextColor(Color.RED);
         } else {
@@ -211,12 +193,11 @@ public class QuizActivity extends AppCompatActivity {
 
     //mengecek jawaban
     private void checkAnswer() {
-        int answerNr = 0;
         answered = true;
         //jika hasil ditampilkan maka timer dipause
         countDownTimer.cancel();
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
-        answerNr = rbGroup.indexOfChild(rbSelected) + 1;
+        int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
         int nomorSoal =  currentQuestion.getIndxPr();
         if (answerNr == currentQuestion.getAnswerNr()) {
             score += 3.33;
@@ -297,10 +278,38 @@ public class QuizActivity extends AppCompatActivity {
 
     }
     private void finishQuiz(){
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_SCORE,score);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+        progressDialog = ProgressDialog.show(QuizActivity.this, "", "Loading.....", true, false);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( this);
+        String idUser = sp.getString("idUserku","");
+        String nilaiAkhir = String.valueOf(score);
+        RequestBody requestBodyIdUser = RequestBody.create(MediaType.parse("text/plain"),idUser);
+        RequestBody requestBodyNilai = RequestBody.create(MediaType.parse("text/plain"), nilaiAkhir);
+
+        try {
+            Call<MessageModel> call = APIService.Factory.create().postTambahNilai(requestBodyIdUser,
+                    requestBodyNilai);
+            call.enqueue(new Callback<MessageModel>() {
+                @Override
+                public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                    progressDialog.dismiss();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(EXTRA_SCORE,score);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Call<MessageModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(QuizActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+            catch(Exception e){
+                e.printStackTrace();
+                pesanException(e.getMessage());
+        }
+
     }
 
     //mengecek tombol back
