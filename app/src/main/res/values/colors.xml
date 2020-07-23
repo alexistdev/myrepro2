@@ -7,4 +7,6 @@
     <color name="warnaPutih">#ffffff</color>
     <color name="warnaToolbar">#255ED6</color>
     <color name="Informasi">#255ED6</color>
+    <color name="Kembali">#5E1633</color>
+    <color name="Mulai">#4CAF50</color>
 </resources>

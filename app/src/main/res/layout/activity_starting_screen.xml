@@ -10,6 +10,7 @@
     tools:context=".Quiz.StartingScreenActivity">
 
     <TextView
+        android:id="@+id/txtJudul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/quiz1"
@@ -17,21 +18,57 @@
         android:textSize="35sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/txtNamaUser"
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtJudul"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="19dp"
+        android:text="@string/quiz13"
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/txtNilai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quiz2"
-        android:layout_above="@+id/btnStartQuiz"
+        android:layout_width="106dp"
+        android:layout_height="57dp"
+        android:layout_below="@+id/txtNamaUser"
         android:layout_centerHorizontal="true"
-        android:textSize="20sp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginTop="83dp"
+        android:layout_marginBottom="6dp"
+        android:text="@string/quiz2"
+        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btnStartQuiz"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/quiz3"
-        android:layout_centerInParent="true"/>
+        android:layout_below="@+id/txtNilai"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnStartQuiz"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:background="@color/Mulai"
+            android:text="@string/quiz3"
+            android:textColor="@color/warnaPutih" />
+
+        <Button
+            android:id="@+id/btnKembali"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="230dp"
+            android:background="@color/Kembali"
+            android:text="@string/quiz12"
+            android:textColor="@color/warnaPutih" />
+    </LinearLayout>
+
 
 </RelativeLayout>

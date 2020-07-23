@@ -8,12 +8,13 @@ public class Pertanyaan {
     private String option3;
     private String option4;
     private String option5;
+    private int indxPr;
     private int statusPr;
     private int answerNr;
 
     public Pertanyaan() {}
 
-    public Pertanyaan(String question, String question2,String option1, String option2, String option3, String option4, String option5,int statusPr, int answerNr) {
+    public Pertanyaan(String question, String question2,String option1, String option2, String option3, String option4, String option5,int indxPr,int statusPr, int answerNr) {
         this.question = question;
         this.question2 = question2;
         this.option1 = option1;
@@ -21,6 +22,7 @@ public class Pertanyaan {
         this.option3 = option3;
         this.option4 = option4;
         this.option5 = option5;
+        this.indxPr = indxPr;
         this.statusPr = statusPr;
         this.answerNr = answerNr;
     }
@@ -79,6 +81,14 @@ public class Pertanyaan {
 
     public void setOption5(String option5) {
         this.option5 = option5;
+    }
+
+    public int getIndxPr() {
+        return indxPr;
+    }
+
+    public void setIndxPr(int indxPr) {
+        this.indxPr = indxPr;
     }
 
     public int getStatusPr() {

@@ -15,6 +15,7 @@ public final class QuisKontrak {
         public static final String COLUMN_OPTION3 = "option3";
         public static final String COLUMN_OPTION4 = "option4";
         public static final String COLUMN_OPTION5 = "option5";
+        public static final String COLUMN_INDX_PR = "indx_pr";
         public static final String COLUMN_STATUS_PR = "status_pr";
         public static final String COLUMN_ANSWER_NR = "answer_nr";
     }

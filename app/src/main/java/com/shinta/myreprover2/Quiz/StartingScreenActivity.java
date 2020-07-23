@@ -11,14 +11,27 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shinta.myreprover2.API.SignupActivity;
+import com.shinta.myreprover2.Menuutama;
+import com.shinta.myreprover2.Network.APIService;
 import com.shinta.myreprover2.R;
+import com.shinta.myreprover2.model.UserModel;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StartingScreenActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_QUIZ  = 1;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private TextView textViewHighscore;
+    private TextView namaUser;
     private String nis;
+    private String nama;
+    private String id;
     private float highscore = 0;
     public float score = 0;
     public String nilaiAkhir;
@@ -26,18 +39,38 @@ public class StartingScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        nama ="";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting_screen);
         nis = getIntent().getStringExtra("nis");
+        nama = getIntent().getStringExtra("nama");
         textViewHighscore = findViewById(R.id.txtNilai);
+        namaUser = findViewById(R.id.txtNamaUser);
+        if(nama != null){
+            namaUser.setText("Selamat Datang " + nama);
+        } else {
+            namaUser.setText("Selamat Datang Siswa");
+        }
+
+        Button buttonKembali = findViewById(R.id.btnKembali);
+        Button buttonMulai = findViewById(R.id.btnStartQuiz);
+        buttonKembali.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intenku = new Intent(getApplicationContext(), Menuutama.class);
+                startActivity(intenku);
+                finish();
+            }
+        });
         try{
             loadHighScore();
             if(highscore != 0){
-                Button buttonMulai = findViewById(R.id.btnStartQuiz);
-                buttonMulai.setEnabled(false);
+                buttonKembali.setVisibility(View.VISIBLE);
+                buttonMulai.setVisibility(View.GONE);
                 Toast.makeText(this, "Anda sudah pernah mengikuti ujian sebelumnya", Toast.LENGTH_SHORT).show();
             } else {
-                Button buttonMulai = findViewById(R.id.btnStartQuiz);
+                buttonMulai.setVisibility(View.VISIBLE);
+                buttonKembali.setVisibility(View.GONE);
                 buttonMulai.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -64,7 +97,10 @@ public class StartingScreenActivity extends AppCompatActivity {
         //jika sudah pernah mengikuti ujian
         super.onActivityResult(requestCode, resultCode, data);
         Button buttonMulai = findViewById(R.id.btnStartQuiz);
+        Button buttonKembali = findViewById(R.id.btnKembali);
         buttonMulai.setEnabled(false);
+        buttonMulai.setVisibility(View.GONE);
+        buttonKembali.setVisibility(View.VISIBLE);
         try{
             if(requestCode == REQUEST_CODE_QUIZ){
                 if(resultCode == RESULT_OK){

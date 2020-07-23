@@ -2,12 +2,15 @@ package com.shinta.myreprover2.Quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +20,26 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shinta.myreprover2.API.SignupActivity;
+import com.shinta.myreprover2.Network.APIService;
 import com.shinta.myreprover2.R;
+import com.shinta.myreprover2.model.MessageModel;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QuizActivity extends AppCompatActivity {
 
     public static final String EXTRA_SCORE  = "extraScore";
     //3 menit timer
-    private static final long COUNTDOWN_IN_MILLIS = 180000;
+    private static final long COUNTDOWN_IN_MILLIS = 18000;
 
     private ImageView gambarPertanyaan;
     private TextView textViewQuestion;
@@ -57,6 +70,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private float score;
     private boolean answered;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,12 +211,13 @@ public class QuizActivity extends AppCompatActivity {
 
     //mengecek jawaban
     private void checkAnswer() {
+        int answerNr = 0;
         answered = true;
         //jika hasil ditampilkan maka timer dipause
         countDownTimer.cancel();
         RadioButton rbSelected = findViewById(rbGroup.getCheckedRadioButtonId());
-        int answerNr = rbGroup.indexOfChild(rbSelected) + 1;
-
+        answerNr = rbGroup.indexOfChild(rbSelected) + 1;
+        int nomorSoal =  currentQuestion.getIndxPr();
         if (answerNr == currentQuestion.getAnswerNr()) {
             score += 3.33;
             if(score > 99){
@@ -212,9 +227,39 @@ public class QuizActivity extends AppCompatActivity {
                 textViewScore.setText("Nilai : " + score);
             }
         }
-
+        simpanJawaban(nomorSoal, answerNr);
         showSolution();
     }
+
+    private void simpanJawaban(Integer nomorSoal, Integer answerNr){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( this);
+        String idUser = sp.getString("idUserku","");
+        progressDialog = ProgressDialog.show(QuizActivity.this, "", "Loading.....", true, false);
+        RequestBody requestBodyIdUser = RequestBody.create(MediaType.parse("text/plain"),idUser);
+        RequestBody requestBodyNomorSoal = RequestBody.create(MediaType.parse("text/plain"), nomorSoal.toString());
+        RequestBody requestBodyAnswerNr = RequestBody.create(MediaType.parse("text/plain"), answerNr.toString());
+        try{
+            Call<MessageModel> call = APIService.Factory.create().postTambahJawaban(requestBodyIdUser,
+                    requestBodyNomorSoal,requestBodyAnswerNr);
+            call.enqueue(new Callback<MessageModel>() {
+                @Override
+                public void onResponse(Call<MessageModel> call, Response<MessageModel> response) {
+                    progressDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<MessageModel> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(QuizActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            pesanException(e.getMessage());
+        }
+    }
+
     private void showSolution(){
         rb1.setTextColor(Color.RED);
         rb2.setTextColor(Color.RED);
@@ -276,5 +321,9 @@ public class QuizActivity extends AppCompatActivity {
         if(countDownTimer != null){
             countDownTimer.cancel();
         }
+    }
+    private void pesanException(String msg)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

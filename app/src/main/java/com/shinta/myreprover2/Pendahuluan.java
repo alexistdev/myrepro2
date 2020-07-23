@@ -57,7 +57,6 @@ public class Pendahuluan extends AppCompatActivity {
                 } else if (position == 1){
                     Intent myIntent = new Intent(getApplicationContext(), Mindmap.class);
                     startActivityForResult(myIntent, 0);
-
                 } else {
                     Intent myIntent = new Intent(getApplicationContext(), Pendahuluan.class);
                     startActivityForResult(myIntent, 0);
@@ -81,11 +80,15 @@ public class Pendahuluan extends AppCompatActivity {
             Intent myIntent = new Intent(getApplicationContext(), Menuutama.class);
             startActivityForResult(myIntent, 0);
             finish();
-        } else {
+        } else if (id == R.id.exit){
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+        } else {
+            Intent myIntent = new Intent(getApplicationContext(), Menuutama.class);
+            startActivityForResult(myIntent, 0);
+            finish();
         }
         return true;
     }

@@ -336,6 +336,9 @@
     <string name="quiz9">Pilihan4</string>
     <string name="quiz10">Disini akan menjadi text pertanyaan\nDisini akan menjadi text pertanyaan\nDisini akan menjadi text pertanyaan</string>
     <string name="quiz11">Simpan</string>
+    <string name="quiz12">Kembali</string>
+    <string name="quiz13">Selamat Datang</string>
+    <string name="quiz14">Nomor Induk Siswa:</string>
 
     <!--    Mindmap-->
     <string name="mind1">PROFIL PENULIS</string>
@@ -351,4 +354,5 @@
     <string name="daftar2">Masukkan Nama Lengkap</string>
     <string name="daftar3">Mulai Test</string>
     <string name="daftar4">INFO</string>
+    <string name="daftar5">success</string>
 </resources>
