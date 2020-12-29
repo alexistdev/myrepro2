@@ -1,5 +1,6 @@
 Myrepro ini aplikasi untuk media pembelajaran mata pelajaran BIOLOGI , untuk anak setingkat SMU/SMK </br>
 Di dalamnya juga ada fungsi ujian atau testing.</br></br>
+Aplikasi ini ditulis dengan bahasa pemrograman java dan dikembangkan dengan android studio.
 
 Untuk testing demo nya di:</br>
 https://play.google.com/store/apps/details?id=com.shinta.myreprover2
